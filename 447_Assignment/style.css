@@ -1,0 +1,194 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+hr {
+    border: none;
+    height: 2px; 
+    background-color: black; 
+    margin: 20px 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+input[type="text"],
+input[type="number"],
+button {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* CSS styles for the grade slider */
+.grade-range {
+    width: 100%;
+}
+
+.grade-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.grade-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #007bff;
+	border-radius: 50%;
+    cursor: pointer;
+}
+
+.grade-slider::-webkit-slider-thumb:hover {
+	background: #0056b3;
+}
+
+.grade-slider::-moz-range-thumb { /* If firefox is used*/
+    width: 20px;
+    height: 20px;
+    background: #007bff;
+	border-radius: 50%;
+    cursor: pointer;
+}
+
+/* CSS styles for the student records table */
+#student-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#student-table th, #student-table td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#student-table th {
+    background-color: #f2f2f2;
+}
+
+#student-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#student-table tr:hover {
+    background-color: #e2e2e2;
+}
+
+/* CSS styles for the instructors records table */
+#instructor-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#instructor-table th, #instructor-table td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#instructor-table th {
+    background-color: #f2f2f2;
+}
+
+#instructor-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#instructor-table tr:hover {
+    background-color: #e2e2e2;
+}
+
+/* CSS styles for the course records table */
+#course-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#course-table th, #course-table td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#course-table th {
+    background-color: #f2f2f2;
+}
+
+#course-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#course-table tr:hover {
+    background-color: #e2e2e2;
+}
+
+/* CSS styles for the grades records table */
+#grades-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#grades-table th, #grades-table td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#grades-table th {
+    background-color: #f2f2f2;
+}
+
+#grades-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#grades-table tr:hover {
+    background-color: #e2e2e2;
+}

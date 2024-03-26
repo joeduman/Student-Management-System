@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Course Management System</title>
+    <link rel="stylesheet" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Student Course Management System</h1>
+		<!-- Form to add new student -->
+		<div id="add-student">
+			<h2>Add New Student</h2>
+			<form id="add-student-form" action="add_data.php" method="POST">
+				<label for="student-name">Name:</label>
+				<input type="text" id="student-name" name="student-name" required>
+				<label for="credits-earned">Credits Earned:</label>
+				<input type="number" id="credits-earned" name="credits-earned" min="0" required>
+				<button type="submit" name="add-student">Add Student</button>
+			</form>
+		</div>
+		<hr>
+		<!-- Form to add new instructor -->
+		<div id="add-instructor">
+			<h2>Add New Instructor</h2>
+			<form id="add-instructor-form" action="add_data.php" method="POST">
+				<label for="instructor-name">Name:</label>
+				<input type="text" id="instructor-name" name="instructor-name" required>
+				<label for="course-department">Course Department:</label>
+				<input type="text" id="course-department" name="course-department" required>
+				<button type="submit" name="add-instructor">Add Instructor</button>
+			</form>
+		</div>
+		<hr>
+		<!-- Form to add new course -->
+		<div id="add-course">
+			<h2>Add New Course</h2>
+			<form id="add-course-form" action="add_data.php" method="POST" onsubmit="return InstructorvalidateForm()">
+				<label for="course-title">Course Title:</label>
+				<input type="text" id="course-title" name="course-title" required>
+				<label for="teaching-instructor">Instructor:</label>
+				<input type="text" id="teaching-instructor" name="teaching-instructor" placeholder="Search instructors..." required>
+				<div id="instructor_suggestions"></div>
+				<script>
+					// Add event listener to the search input field to trigger filtering on input
+					document.getElementById('teaching-instructor').addEventListener('input', filterInstructors);
+
+					// Function to filter instructor suggestions based on the search query
+					function filterInstructors() {
+						// Get the search query entered by the user
+						var query = document.getElementById('teaching-instructor').value.toLowerCase();
+
+						// Get all instructor names from the table
+						var instructorNames = Array.from(document.querySelectorAll('#instructor-table tbody tr td:nth-child(2)')).map(td => td.textContent);
+
+						// Filter instructor names based on the search query
+						var suggestions = instructorNames.filter(name => name.toLowerCase().includes(query));
+
+						// Display the filtered suggestions
+						var suggestionsList = document.getElementById('instructor_suggestions');
+						suggestionsList.innerHTML = ''; // Clear previous suggestions
+						suggestions.forEach(name => {
+							var suggestion = document.createElement('div');
+							suggestion.textContent = name;
+							suggestion.classList.add('suggestion'); // Add a CSS class for styling
+							// Add click event listener to set the clicked name as the value for the textbox
+							suggestion.addEventListener('click', function() {
+								document.getElementById('teaching-instructor').value = name;
+								// Clear suggestions after selecting a name
+								suggestionsList.innerHTML = '';
+							});
+							suggestionsList.appendChild(suggestion);
+						});
+					}
+				</script>
+				<style>
+					/* Style for the suggestion list */
+					.suggestion {
+						cursor: pointer; /* Change cursor to pointer when hovering over suggestions */
+						padding: 5px; /* Add padding for better appearance */
+					}
+
+					/* Style for the suggestion list when hovering */
+					.suggestion:hover {
+						background-color: #f0f0f0; /* Change background color when hovering */
+					}
+				</style>
+				<button type="submit" name="add-course">Add Course</button>
+			</form>
+			<script>
+				function InstructorvalidateForm() {
+					// Get the value entered by the user
+					var instructor = document.getElementById('teaching-instructor').value;
+
+					// Get the list of available instructors
+					var instructorList = Array.from(document.querySelectorAll('#instructor-table tbody tr td:nth-child(2)')).map(td => td.textContent);
+
+					// Check if the entered instructor exists
+					if (!instructorList.includes(instructor)) {
+						alert("Instructor does not exist!");
+						return false; // Prevent form submission
+					}
+
+					// If instructor exists, allow form submission
+					return true;
+				}
+			</script>
+		</div>
+		<hr>
+		<h1>Enroll Student In Course</h1>
+		<form action="submit_grade.php" method="POST" onsubmit="return validateForm()">
+			<h2>Student</h2>
+			<input type="text" id="search-student" name="search-student" placeholder="Search students..." required>
+			<div id="suggestions"></div>
+			<script>
+				// Add event listener to the search input field to trigger filtering on input
+				document.getElementById('search-student').addEventListener('input', filterStudents);
+
+				// Function to filter student suggestions based on the search query
+				function filterStudents() {
+					// Get the search query entered by the user
+					var query = document.getElementById('search-student').value.toLowerCase();
+
+					// Get all student names from the table
+					var studentNames = Array.from(document.querySelectorAll('#student-table tbody tr td:nth-child(2)')).map(td => td.textContent);
+
+					// Filter student names based on the search query
+					var suggestions = studentNames.filter(name => name.toLowerCase().includes(query));
+
+					// Display the filtered suggestions
+					var suggestionsList = document.getElementById('suggestions');
+					suggestionsList.innerHTML = ''; // Clear previous suggestions
+					suggestions.forEach(name => {
+						var suggestion = document.createElement('div');
+						suggestion.textContent = name;
+						suggestion.classList.add('suggestion'); // Add a CSS class for styling
+						// Add click event listener to set the clicked name as the value for the textbox
+						suggestion.addEventListener('click', function() {
+							document.getElementById('search-student').value = name;
+							// Clear suggestions after selecting a name
+							suggestionsList.innerHTML = '';
+						});
+						suggestionsList.appendChild(suggestion);
+					});
+				}
+			</script>
+			<style>
+				/* Style for the suggestion list */
+				.suggestion {
+					cursor: pointer; /* Change cursor to pointer when hovering over suggestions */
+					padding: 5px; /* Add padding for better appearance */
+				}
+
+				/* Style for the suggestion list when hovering */
+				.suggestion:hover {
+					background-color: #f0f0f0; /* Change background color when hovering */
+				}
+			</style>
+			<h2>Course</h2>
+			<input type="text" id="search-course" name="search-course" placeholder="Search courses..." required>
+			<div id="course_suggestions"></div>
+			<script>
+				// Add event listener to the search input field to trigger filtering on input
+				document.getElementById('search-course').addEventListener('input', filterCourses);
+				
+				// Function to filter course suggestions based on the search query
+				function filterCourses() {
+					// Get the search query entered by the user
+					var query = document.getElementById('search-course').value.toLowerCase();
+
+					// Get all course titles from the table
+					var courseTitles = Array.from(document.querySelectorAll('#course-table tbody tr td:nth-child(2)')).map(td => td.textContent);
+
+					// Filter course titles based on the search query
+					var suggestions = courseTitles.filter(course_title => course_title.toLowerCase().includes(query));
+
+					// Display the filtered suggestions
+					var suggestionsList = document.getElementById('course_suggestions');
+					suggestionsList.innerHTML = ''; // Clear previous suggestions
+					suggestions.forEach(course_title => {
+						var suggestion = document.createElement('div');
+						suggestion.textContent = course_title;
+						suggestion.classList.add('suggestion'); // Add a CSS class for styling
+						// Add click event listener to set the clicked name as the value for the textbox
+						suggestion.addEventListener('click', function() {
+							document.getElementById('search-course').value = course_title;
+							// Clear suggestions after selecting a name
+							suggestionsList.innerHTML = '';
+						});
+						suggestionsList.appendChild(suggestion);
+					});
+				}
+			</script>
+			<style>
+				/* Style for the suggestion list */
+				.suggestion {
+					cursor: pointer; /* Change cursor to pointer when hovering over suggestions */
+					padding: 5px; /* Add padding for better appearance */
+				}
+
+				/* Style for the suggestion list when hovering */
+				.suggestion:hover {
+					background-color: #f0f0f0; /* Change background color when hovering */
+				}
+			</style>
+			<h2>Select Grade (0-100):</h2>
+			<input type="range" class="grade-slider" id="grade" name="grade" min="0" max="100" required><br><br>
+			<span id="gradeValue">50</span>
+			<script>
+				$(document).ready(function() {
+					// Update the value display when slider changes
+					$('#grade').on('input', function() {
+						$('#gradeValue').text($(this).val());
+					});
+				});
+			</script>
+			<button type="submit">Enroll</button>		
+			<script>
+				// If Student already is enrolled in class
+				// Retrieve error message from query parameter
+				const urlParams = new URLSearchParams(window.location.search);
+				const errorMessage = urlParams.get('error');
+
+				// Display error message if it exists
+				if (errorMessage) {
+					alert(errorMessage);
+				}
+			</script>
+		</form>
+		<script>
+			function validateForm() {
+				// Get the values entered by the user
+				var student = document.getElementById('search-student').value;
+				var course = document.getElementById('search-course').value;
+
+				// Get the list of available students and courses
+				var studentList = Array.from(document.querySelectorAll('#student-table tbody tr td:nth-child(2)')).map(td => td.textContent);
+				var courseList = Array.from(document.querySelectorAll('#course-table tbody tr td:nth-child(2)')).map(td => td.textContent);
+
+				// Check if the entered student exists
+				if (!studentList.includes(student)) {
+					alert("Student does not exist!");
+					return false; // Prevent form submission
+				}
+
+				// Check if the entered course exists
+				if (!courseList.includes(course)) {
+					alert("Course does not exist!");
+					return false; // Prevent form submission
+				}
+
+				// If both student and course exist, allow form submission
+				return true;
+			}
+		</script>
+    </div>
+	<h2>Current Students</h2>
+    <table id="student-table">
+		<thead>
+			<!-- Table headers -->
+			<tr>
+				<th>Student ID</th>
+				<th>Name</th>
+				<th>Credits Earned</th>
+				<th>Remove Student</th>
+			</tr>
+		</thead>
+		<tbody>
+			<script src="main_script.js"></script>
+		</tbody>
+    </table>
+	<h2>Current Instructors</h2>
+	<table id="instructor-table">
+		<thead>
+			<tr>
+				<th>Instructor ID</th>
+				<th>Name</th>
+				<th>Department</th>
+				<th>Remove Instructor</th>
+			</tr>
+		</thead>
+		<tbody>
+			<script src="main_script.js"></script>
+		</tbody>
+	</table>
+	<h2>Current Courses</h2>
+	<table id="course-table">
+		<thead>
+			<tr>
+				<th>Course ID</th>
+				<th>Course Title</th>
+				<th>Instructor</th>
+				<th>Remove Course</th>
+			</tr>
+		</thead>
+		<tbody>
+			<script src="main_script.js"></script>
+		</tbody>
+	</table>
+	<h2>Enrolled Students</h2>
+	<table id="grades-table">
+		<thead>
+			<tr>
+				<th>Student</th>
+				<th>Course</th>
+				<th>Grade</th>
+				<th>Drop Course</th>
+			</tr>
+		</thead>
+		<tbody>
+			<script src="main_script.js"></script>
+		</tbody>
+	</table>
+</body>
+</html>
