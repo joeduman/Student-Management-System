@@ -40,7 +40,7 @@
 * QUICK NOTE *
 **************
 -------------------------------------------------------------------------------------------------------------
-- When adding anything to the tables (student, instructor, etc.), input them and click submit one at a time -			 -
+- When adding anything to the tables (student, instructor, etc.), input them and click submit one at a time -			 
 -------------------------------------------------------------------------------------------------------------
 
 *********
